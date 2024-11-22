@@ -1,5 +1,5 @@
 %{
-	// this part is copied to the beginning of the parser 
+	// this part is copied to the beginning of the parser
 	#include <stdio.h>
 	#include "lang.h"
 	#include "lexer.h"
@@ -56,12 +56,11 @@ NT_WHOLE:
 NT_GLOB_ITEM_LIST:
   NT_GLOB_ITEM TM_SEMICOL NT_GLOB_ITEM_LIST
   {
-    $$ = (TGCONS($1, $3));
+    $$ = (TGCons($1, $3));
   }
 | NT_GLOB_ITEM
   {
-    $$ = (TGCONS($1, TGNil()));
+    $$ = (TGCons($1, TGNil()));
   }
 
 NT_GLOB_ITEM:
-

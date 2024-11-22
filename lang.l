@@ -54,11 +54,11 @@
 }
 
 "{" {
-    return TM_LEFT_CURL;
+    return TM_LEFT_CURLY;
 }
 
 "}" {
-    return TM_RIGHT_CURL;
+    return TM_RIGHT_CURLY;
 }
 
 ";" {
