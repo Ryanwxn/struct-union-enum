@@ -1,1 +1,7 @@
-build/
+lexer.h
+lexer.c
+parser.c
+parser.h
+*.o
+main
+parser.output
