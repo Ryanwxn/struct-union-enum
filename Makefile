@@ -1,38 +1,42 @@
-lexer.h: lang.l
-	flex lang.l
+# 定义构建目录
+BUILD_DIR = build
 
-lexer.c: lang.l
-	flex lang.l
+# 创建构建目录规则
+$(BUILD_DIR):
+    mkdir -p $(BUILD_DIR)
 
-parser.c: lang.y
-	bison -o parser.c -d -v lang.y
+# 生成的文件都放在 build 目录下
+$(BUILD_DIR)/lexer.h: lang.l | $(BUILD_DIR)
+    flex --outfile=$(BUILD_DIR)/lexer.c $<
 
-parser.h: lang.y
-	bison -o parser.c -d -v lang.y
+$(BUILD_DIR)/lexer.c: lang.l | $(BUILD_DIR)
+    flex --outfile=$(BUILD_DIR)/lexer.c $<
 
-lang.o: lang.c lang.h
-	gcc -c lang.c
+$(BUILD_DIR)/parser.c: lang.y | $(BUILD_DIR)
+    bison -o $(BUILD_DIR)/parser.c -d -v $<
 
-parser.o: parser.c parser.h lexer.h lang.h
-	gcc -c parser.c
+$(BUILD_DIR)/parser.h: lang.y | $(BUILD_DIR)
+    bison -o $(BUILD_DIR)/parser.c -d -v $<
 
-lexer.o: lexer.c lexer.h parser.h lang.h
-	gcc -c lexer.c
+$(BUILD_DIR)/lang.o: lang.c lang.h | $(BUILD_DIR)
+    gcc -c $< -o $@
 
-main.o: main.c lexer.h parser.h lang.h
-	gcc -c main.c
+$(BUILD_DIR)/parser.o: $(BUILD_DIR)/parser.c $(BUILD_DIR)/parser.h $(BUILD_DIR)/lexer.h lang.h | $(BUILD_DIR)
+    gcc -c $(BUILD_DIR)/parser.c -o $@
 
-main: lang.o parser.o lexer.o main.o
-	gcc lang.o parser.o lexer.o main.o -o main
+$(BUILD_DIR)/lexer.o: $(BUILD_DIR)/lexer.c $(BUILD_DIR)/lexer.h $(BUILD_DIR)/parser.h lang.h | $(BUILD_DIR)
+    gcc -c $(BUILD_DIR)/lexer.c -o $@
 
-all: main
+$(BUILD_DIR)/main.o: main.c $(BUILD_DIR)/lexer.h $(BUILD_DIR)/parser.h lang.h | $(BUILD_DIR)
+    gcc -c $< -o $@
+
+$(BUILD_DIR)/main: $(BUILD_DIR)/lang.o $(BUILD_DIR)/parser.o $(BUILD_DIR)/lexer.o $(BUILD_DIR)/main.o | $(BUILD_DIR)
+    gcc $^ -o $@
+
+all: $(BUILD_DIR)/main
 
 clean:
-	rm -f lexer.h lexer.c parser.h parser.c *.o main
+    rm -rf $(BUILD_DIR)
 
 %.c: %.y
-
-%.c: %.l
-
-.DEFAULT_GOAL := all
-
+    bison -o $@ $<
