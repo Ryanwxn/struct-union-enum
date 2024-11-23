@@ -198,3 +198,21 @@ NT_NAME_RIGHT_TYPE_EXPR:
   {
     $$ = (TFuncType($1, $3));
   }
+
+NT_ANNON_RIGHT_TYPE_EXPR:
+  /* EMPTY */
+  {
+    $$ = (TOrigType(NULL));
+  }
+| TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR
+  {
+    $$ = (TPtrType($2));
+  }
+| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
+  {
+    $$ = (TArrayType($1, $3));
+  }
+| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_SQUARE
+  {
+    $$ = (TFuncType($1, $3));
+  }
