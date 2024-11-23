@@ -123,7 +123,7 @@ NT_ARGUMENT_TYPE_LIST:
 NT_ENUM_ELE_LIST:
   TM_IDENT TM_COMMA NT_ENUM_ELE_LIST
   {
-    $$ = (TECons($1, $2));
+    $$ = (TECons($1, $3));
   }
 | TM_IDENT
   {

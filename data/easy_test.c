@@ -1,1 +1,1 @@
-struct SB { int a ; } ; struct Test_int { int Num_1 ; int Num_2 ; } ;
+struct SB { int a ; } ; struct Test_int { int Num_1 ; int Num_2 ; } ; enum EnumTest { enum1 , enum2 } ;
