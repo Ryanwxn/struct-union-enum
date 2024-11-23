@@ -21,3 +21,8 @@ struct Test_char_pointer
     char *ptr_1;
     char *ptr_2,c_1;
 };
+
+struct Empty_Struct
+{
+    //Empty
+};
