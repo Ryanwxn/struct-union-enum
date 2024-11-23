@@ -101,31 +101,23 @@ NT_GLOB_ITEM:
   }
 
 NT_FIELD_LIST:
-  /* EMPTY */
-  {
-    $$ = (TTNil());
-  }
-| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
-  {
-    $$ = (TTCons($1, $2, TTNil()));
-  }
-| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL NT_FIELD_LIST
+  NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL NT_FIELD_LIST
   {
     $$ = (TTCons($1, $2, $4));
+  }
+| /* EMPTY */
+  {
+    $$ = (TTNil());
   }
 
 NT_ARGUMENT_TYPE_LIST:
-  /* EMPTY */
-  {
-    $$ = (TTNil());
-  }
-| NT_LEFT_TYPE NT_ANNON_RIGHT_TYPE_EXPR
-  {
-    $$ = (TTCons($1, $2, TTNil()));
-  }
-| NT_LEFT_TYPE NT_ANNON_RIGHT_TYPE_EXPR TM_COMMA NT_ARGUMENT_TYPE_LIST
+  NT_LEFT_TYPE NT_ANNON_RIGHT_TYPE_EXPR TM_COMMA NT_ARGUMENT_TYPE_LIST
   {
     $$ = (TTCons($1, $2, $4));
+  }
+| /* EMPTY */
+  {
+    $$ = (TTNil());
   }
 
 NT_ENUM_ELE_LIST:

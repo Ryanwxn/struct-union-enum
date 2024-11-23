@@ -24,10 +24,9 @@ union Test_char_pointer
     char * ptr_1 ;
     char * ptr_2 ;
     int * c_1 ;
-};
+} ;
 
 union Empty_Union
 {
     
-};
-
+} ;
