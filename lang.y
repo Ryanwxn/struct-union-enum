@@ -137,7 +137,7 @@ NT_LEFT_TYPE:
   }
 | TM_STRUCT TM_LEFT_CURLY NT_FIELD_LIST TM_RIGHT_CURLY
   {
-    $$ = (TNewStructType(NULL, $4));
+    $$ = (TNewStructType(NULL, $3));
   }
 | TM_STRUCT TM_IDENT
   {
@@ -149,7 +149,7 @@ NT_LEFT_TYPE:
   }
 | TM_UNION TM_LEFT_CURLY NT_FIELD_LIST TM_RIGHT_CURLY
   {
-    $$ = (TNewUnionType(NULL, $4));
+    $$ = (TNewUnionType(NULL, $3));
   }
 | TM_UNION TM_IDENT
   {
@@ -161,7 +161,7 @@ NT_LEFT_TYPE:
   }
 | TM_ENUM TM_LEFT_CURLY NT_ENUM_ELE_LIST TM_RIGHT_CURLY
   {
-    $$ = (TNewEnumType(NULL, $4));
+    $$ = (TNewEnumType(NULL, $3));
   }
 | TM_ENUM TM_IDENT
   {
