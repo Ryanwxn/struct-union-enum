@@ -98,3 +98,23 @@ NT_GLOB_ITEM:
     $$ = (TVarDef($1, $2));
   }
 
+NT_TYPE_LIST:
+  NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL NT_TYPE_LIST
+  {
+    $$ = (TTCons($1, $2, $3));
+  }
+| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
+  {
+    $$ = (TTCons($1, $2, TTNil()));
+  }
+
+NT_ENUM_ELE_LIST:
+  TM_IDENT TM_COMMA NT_ENUM_ELE_LIST
+  {
+    $$ = (TECons($1, $2));
+  }
+| TM_IDENT
+  {
+    $$ = (TECOns($1, TENil()));
+  }
+
