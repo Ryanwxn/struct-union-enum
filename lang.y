@@ -99,16 +99,6 @@ NT_GLOB_ITEM:
     $$ = (TVarDef($1, $2));
   }
 
-NT_TYPE_LIST:
-  NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL NT_TYPE_LIST
-  {
-    $$ = (TTCons($1, $2, $3));
-  }
-| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
-  {
-    $$ = (TTCons($1, $2, TTNil()));
-  }
-
 NT_ENUM_ELE_LIST:
   TM_IDENT TM_COMMA NT_ENUM_ELE_LIST
   {
@@ -119,6 +109,55 @@ NT_ENUM_ELE_LIST:
     $$ = (TECOns($1, TENil()));
   }
 
+NT_LEFT_TYPE:
+  TM_STRUCT TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewStructType($2, $4));
+  }
+| TM_STRUCT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewStructType(NULL, $4));
+  }
+| TM_STRUCT TM_IDENT
+  {
+    $$ = (TStructType($2));
+  }
+| TM_UNION TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewUnionType($2, $4));
+  }
+| TM_UNION TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewUnionType(NULL, $4));
+  }
+| TM_UNION TM_IDENT
+  {
+    $$ = (TUnionType($2));
+  }
+| TM_ENUM TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewEnumType($2, $4));
+  }
+| TM_ENUM TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY
+  {
+    $$ = (TNewEnumType(NULL, $4));
+  }
+| TM_UNION TM_IDENT
+  {
+    $$ = (TEnumType($2));
+  }
+| TM_INT
+  {
+    $$ = (TIntType());
+  }
+| TM_CHAR
+  {
+    $$ = (TCharType());
+  }
+| TM_IDENT
+  {
+    $$ = (TDefinedType($1));
+  }
 
 
 NT_NAME_RIGHT_TYPE_EXPR:
