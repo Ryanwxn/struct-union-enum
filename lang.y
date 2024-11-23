@@ -39,6 +39,7 @@ void * none;
 %type <lt> NT_LEFT_TYPE
 %type <eel> NT_ENUM_ELE_LIST
 %type <tl> NT_TYPE_LIST
+%type <nrte> NT_NAME_RIGHT_TYPE_EXPR
 
 // Priority
 %left TM_LEFT_CURLY TM_RIGHT_CURLY TM_LEFT_SQUARE TM_RIGHT_SQUARE TM_LEFT_PAREN TM_RIGHT_PAREN
@@ -64,3 +65,28 @@ NT_GLOB_ITEM_LIST:
   }
 
 NT_GLOB_ITEM:
+  TM_STRUCT TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY TM_SEMICOL
+  {
+    $$ = (TSturctDef($2, $4));
+  }
+| TM_STRUCT TM_IDENT TM_SEMICOL
+  {
+    $$ = (TSturctDecl($2));
+  }
+| TM_UNION TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY TM_SEMICOL
+  {
+    $$ = (TUnionDef($2, $4));
+  }
+| TM_UNION TM_IDENT TM_SEMICOL
+  {
+    $$ = (TUnionDecl($2));
+  }
+| TM_ENUM TM_IDENT TM_LEFT_CURLY NT_ENUM_ELE_LIST TM_RIGHT_CURLY TM_SEMICOL
+  {
+    $$ = (TEnumDef($2, $4));
+  }
+| TM_ENUM TM_IDENT TM_SEMICOL
+  {
+    $$ = (TEnumDecl($2));
+  }
+| TM_TYPEDEF NT_LEFT_TYPE NT_NAME
