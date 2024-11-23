@@ -38,7 +38,8 @@ void * none;
 %type <vde> NT_VAR_DECL_EXPR
 %type <lt> NT_LEFT_TYPE
 %type <eel> NT_ENUM_ELE_LIST
-%type <tl> NT_TYPE_LIST
+%type <fl> NT_FIELD_LIST
+%type <atl> NT_ARGUMENT_TYPE_LIST
 %type <nrte> NT_NAME_RIGHT_TYPE_EXPR
 
 // Priority
@@ -65,7 +66,7 @@ NT_GLOB_ITEM_LIST:
   }
 
 NT_GLOB_ITEM:
-  TM_STRUCT TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY TM_SEMICOL
+  TM_STRUCT TM_IDENT TM_LEFT_CURLY NT_FIELD_LIST TM_RIGHT_CURLY TM_SEMICOL
   {
     $$ = (TSturctDef($2, $4));
   }
@@ -73,7 +74,7 @@ NT_GLOB_ITEM:
   {
     $$ = (TSturctDecl($2));
   }
-| TM_UNION TM_IDENT TM_LEFT_CURLY NT_TYPE_LIST TM_RIGHT_CURLY TM_SEMICOL
+| TM_UNION TM_IDENT TM_LEFT_CURLY NT_FIELD_LIST TM_RIGHT_CURLY TM_SEMICOL
   {
     $$ = (TUnionDef($2, $4));
   }
@@ -118,3 +119,22 @@ NT_ENUM_ELE_LIST:
     $$ = (TECOns($1, TENil()));
   }
 
+
+
+NT_NAME_RIGHT_TYPE_EXPR:
+  TM_IDENT
+  {
+    $$ = (TOrigType($1));
+  }
+| TM_DEREF NT_NAME_RIGHT_TYPE_EXPR
+  {
+    $$ = (TPtrType($2));
+  }
+| NT_NAME_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
+  {
+    $$ = (TArrayType($1, $3));
+  }
+| NT_NAME_RIGHT_TYPE_EXPR TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType($1, $3));
+  }
