@@ -101,7 +101,11 @@ NT_GLOB_ITEM:
   }
 
 NT_FIELD_LIST:
-  NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
+  /* EMPTY */
+  {
+    $$ = (TTNil());
+  }
+| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
   {
     $$ = (TTCons($1, $2, TTNil()));
   }
@@ -111,7 +115,11 @@ NT_FIELD_LIST:
   }
 
 NT_ARGUMENT_TYPE_LIST:
-  NT_LEFT_TYPE NT_ANNON_RIGHT_TYPE_EXPR
+  /* EMPTY */
+  {
+    $$ = (TTNil());
+  }
+| NT_LEFT_TYPE NT_ANNON_RIGHT_TYPE_EXPR
   {
     $$ = (TTCons($1, $2, TTNil()));
   }

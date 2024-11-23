@@ -8,8 +8,9 @@ struct Test_int {
     struct {
         int SBB ;
     } SBBB ;
+    SB ZH ;
 } ;
 enum EnumTest { 
-    enum1 , enum2 
+    WXN , FHC , LJN , WXY , ZH
 } ; 
 union UnionTest { char union1 ; int union2 ; } ;
