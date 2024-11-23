@@ -15,6 +15,7 @@ int main(int argc, char * * argv) {
     printf("Error, too many arguments!\n");
     return 0;
   }
+  printf(" Success, file name : %s \n", argv[1]);
   yyin = fopen(argv[1], "rb");
   if (yyin == NULL) {
     printf("File %s can't be opened.\n", argv[1]);
