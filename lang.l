@@ -37,7 +37,7 @@
 }
 
 [_A-Za-z][_A-Za-z0-9]* {
-    yylval.i = new_str(yytext, yyleng);
+    yylval.id = new_str(yytext, yyleng);
     return TM_IDENT;
 }
 
