@@ -216,3 +216,10 @@ NT_ANNON_RIGHT_TYPE_EXPR:
   {
     $$ = (TFuncType($1, $3));
   }
+
+%%
+
+void yyerror(char* s)
+{
+  fprintf(stderr , "%s\n",s);
+}
