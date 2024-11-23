@@ -73,6 +73,10 @@
     return TM_DEREF;
 }
 
+"," {
+    return TM_COMMA;
+}
+
 [ \t\n\r]    { };
 
 .   {printf("%s",yytext);

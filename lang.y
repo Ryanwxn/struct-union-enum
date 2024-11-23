@@ -28,7 +28,7 @@ void * none;
 %token <none> TM_LEFT_SQUARE TM_RIGHT_SQUARE
 %token <none> TM_LEFT_PAREN TM_RIGHT_PAREN
 %token <none> TM_DEREF
-%token <none> TM_SEMICOL
+%token <none> TM_SEMICOL TM_COMMA
 %token <none> TM_STRUCT TM_UNION TM_ENUM TM_TYPEDEF
 
 // Nonterminals
@@ -43,7 +43,7 @@ void * none;
 // Priority
 %left TM_LEFT_CURLY TM_RIGHT_CURLY TM_LEFT_SQUARE TM_RIGHT_SQUARE TM_LEFT_PAREN TM_RIGHT_PAREN
 %right TM_DEREF
-%right TM_SEMICOL
+%right TM_SEMICOL TM_COMMA
 
 %%
 NT_WHOLE:
