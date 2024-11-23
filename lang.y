@@ -29,7 +29,7 @@ void * none;
 %token <none> TM_LEFT_PAREN TM_RIGHT_PAREN
 %token <none> TM_DEREF
 %token <none> TM_SEMICOL
-%token <none> TM_STRUCT TM_UNION TM_ENUM
+%token <none> TM_STRUCT TM_UNION TM_ENUM TM_TYPEDEF
 
 // Nonterminals
 %type <gil> NT_WHOLE
