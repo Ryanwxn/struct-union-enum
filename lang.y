@@ -89,4 +89,12 @@ NT_GLOB_ITEM:
   {
     $$ = (TEnumDecl($2));
   }
-| TM_TYPEDEF NT_LEFT_TYPE NT_NAME
+| TM_TYPEDEF NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
+  {
+    $$ = (TTypeDef($2, $3));
+  }
+| NT_LEFT_TYPE NT_NAME_RIGHT_TYPE_EXPR TM_SEMICOL
+  {
+    $$ = (TVarDef($1, $2));
+  }
+
