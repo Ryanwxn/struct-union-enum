@@ -2,6 +2,7 @@
 	// this part is copied to the beginning of the parser
 	#include <stdio.h>
 	#include "lang.h"
+  #include "lib.h"
 	#include "lexer.h"
 	void yyerror(char *);
 	int yylex(void);
