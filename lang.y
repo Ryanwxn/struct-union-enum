@@ -57,9 +57,9 @@ NT_WHOLE:
   }
 
 NT_GLOB_ITEM_LIST:
-  NT_GLOB_ITEM TM_SEMICOL NT_GLOB_ITEM_LIST
+  NT_GLOB_ITEM NT_GLOB_ITEM_LIST
   {
-    $$ = (TGCons($1, $3));
+    $$ = (TGCons($1, $2));
   }
 | NT_GLOB_ITEM
   {
