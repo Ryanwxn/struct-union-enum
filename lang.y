@@ -5,7 +5,7 @@
 	#include "lexer.h"
 	void yyerror(char *);
 	int yylex(void);
-        struct cmd * root;
+  struct global_item_list * root;
 %}
 
 %union {
