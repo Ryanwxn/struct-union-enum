@@ -127,7 +127,7 @@ NT_ENUM_ELE_LIST:
   }
 | TM_IDENT
   {
-    $$ = (TECOns($1, TENil()));
+    $$ = (TECons($1, TENil()));
   }
 
 NT_LEFT_TYPE:
