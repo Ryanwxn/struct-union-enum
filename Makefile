@@ -1,5 +1,5 @@
 lexer.h: lang.l
-	flex -o build/lexer.c lang.l
+	flex lang.l
 
 lexer.c: lang.l
 	flex lang.l
