@@ -42,7 +42,6 @@ void * none;
 %type <tl> NT_ARGUMENT_TYPE_LIST
 %type <vde> NT_NAME_RIGHT_TYPE_EXPR
 %type <vde> NT_ANNON_RIGHT_TYPE_EXPR
-%type <vde> NT_NON_EMPTY_ANNON_RIGHT_TYPE_EXPR
 
 // Priority
 %right TM_DEREF
@@ -107,6 +106,7 @@ NT_FIELD_LIST:
     $$ = (TTCons($1, $2, $4));
   }
 | /* EMPTY */
+  %empty
   {
     $$ = (TTNil());
   }
@@ -210,30 +210,25 @@ NT_NAME_RIGHT_TYPE_EXPR:
 
 NT_ANNON_RIGHT_TYPE_EXPR:
   /* EMPTY */
+  %empty
   {
     $$ = (TOrigType(NULL));
   }
-| NT_NON_EMPTY_ANNON_RIGHT_TYPE_EXPR
-  {
-    $$ = ($1);
-  }
-
-NT_NON_EMPTY_ANNON_RIGHT_TYPE_EXPR:
-  TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR
+| TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR
   {
     $$ = (TPtrType($2));
+  }
+| TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType(TPtrType(TOrigType(NULL)), $5));
+  }
+| TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType(TPtrType(TOrigType(NULL)), TTNil()));
   }
 | NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
   {
     $$ = (TArrayType($1, $3));
-  }
-| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($1, $3));
-  }
-| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_PAREN TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($1, TTNil()));
   }
 
 %%
