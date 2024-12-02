@@ -220,11 +220,14 @@ NT_ANNON_RIGHT_TYPE_EXPR:
   }
 | TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
   {
-    $$ = (TFuncType(TPtrType(TOrigType(NULL)), $5));
+    // Waiting for response
+    // $$ = (TFuncType(TPtrType(TOrigType(NULL)), $5));
+    $$ = (TPtrType(TFuncType(TOrigType(NULL), $5)));
   }
 | TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN TM_RIGHT_PAREN
   {
-    $$ = (TFuncType(TPtrType(TOrigType(NULL)), TTNil()));
+    // $$ = (TFuncType(TPtrType(TOrigType(NULL)), TTNil()));
+    $$ = (TPtrType(TFuncType(TOrigType(NULL), TTNil())));
   }
 | NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
   {
