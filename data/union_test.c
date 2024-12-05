@@ -28,5 +28,5 @@ union Test_char_pointer
 
 union Empty_Union
 {
-    
+
 } ;

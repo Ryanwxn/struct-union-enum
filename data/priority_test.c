@@ -1,11 +1,12 @@
-struct nested_Struct
-{
-    int * Struct_a [10] ;
-    char * Struct_b [10] ;
-} ;
+int i;
+int* ptr_i;
+int arr_i[10];
+int (*ptr_arr_i)[10];
+int* arr_ptr_i[10];
 
-union nested_Union
-{
-    int * Union_a [10] ;
-    char * Union_b [10] ;
-} ;
+int func(int);
+int *ptr_func(int);
+int (*func_ptr)(int);
+int func_arr(int)[10];
+int *ptr_arr_func(int)[10];
+int (*arr_func_ptr)(int)[10];

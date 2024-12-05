@@ -42,7 +42,7 @@ void * none;
 %type <tl> NT_ARGUMENT_TYPE_LIST
 %type <vde> NT_NAME_RIGHT_TYPE_EXPR
 %type <vde> NT_ANNON_RIGHT_TYPE_EXPR
-%type <vde> NT_ANNON_RIGHT_TYPE_EXPR_2
+%type <none> NT_ANNON_RIGHT_TYPE_NAME
 
 // Priority
 %right TM_DEREF
@@ -107,7 +107,12 @@ NT_FIELD_LIST:
   {
     $$ = (TTCons($1, $2, $4));
   }
+<<<<<<< HEAD
 | %empty
+=======
+| /* EMPTY */
+  %empty
+>>>>>>> fbc529619631bee8be36efea3109fc61365811e3
   {
     $$ = (TTNil());
   }
@@ -210,47 +215,36 @@ NT_NAME_RIGHT_TYPE_EXPR:
   }
 
 NT_ANNON_RIGHT_TYPE_EXPR:
-  TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR_2
-  {
-    $$ = (TPtrType($2));
-  }
-| NT_ANNON_RIGHT_TYPE_EXPR_2
+| NT_ANNON_RIGHT_TYPE_NAME
   {
     $$ = ($1);
   }
-
-NT_ANNON_RIGHT_TYPE_EXPR_2:
-  TM_LEFT_PAREN TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR_2 TM_RIGHT_PAREN
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
   {
-    $$ = (TPtrType($3));
+    $$ = (TFuncType($2, $5));
+  }
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN TM_LEFT_PAREN TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType($2, TTNil()));
   }
 | NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
   {
     $$ = (TArrayType($1, $3));
   }
-| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE TM_RIGHT_PAREN
-  {
-    $$ = (TArrayType($2, $4));
-  }  
-| NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_PAREN TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($1, TTNil()));
-  }
-| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_PAREN TM_RIGHT_PAREN TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($2, TTNil()));
-  }  
-| NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($1, $3));
-  }
-| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_EXPR_2 TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN TM_RIGHT_PAREN
-  {
-    $$ = (TFuncType($2, $4));
-  }  
-| %empty
+
+NT_ANNON_RIGHT_TYPE_NAME:
+  /* EMPTY */
+  %empty
   {
     $$ = (TOrigType(NULL));
+  }
+| TM_DEREF NT_ANNON_RIGHT_TYPE_NAME
+  {
+    $$ = (TPtrType($2));
+  }
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN
+  {
+    $$ = ($2);
   }
 
 %%
