@@ -1,1 +1,1 @@
-int * x (int);
+int *x (int);
