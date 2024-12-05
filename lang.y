@@ -42,6 +42,7 @@ void * none;
 %type <tl> NT_ARGUMENT_TYPE_LIST
 %type <vde> NT_NAME_RIGHT_TYPE_EXPR
 %type <vde> NT_ANNON_RIGHT_TYPE_EXPR
+%type <none> NT_ANNON_RIGHT_TYPE_NAME
 
 // Priority
 %right TM_DEREF
@@ -209,29 +210,36 @@ NT_NAME_RIGHT_TYPE_EXPR:
   }
 
 NT_ANNON_RIGHT_TYPE_EXPR:
+| NT_ANNON_RIGHT_TYPE_NAME
+  {
+    $$ = ($1);
+  }
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType($2, $5));
+  }
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN TM_LEFT_PAREN TM_RIGHT_PAREN
+  {
+    $$ = (TFuncType($2, TTNil()));
+  }
+| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
+  {
+    $$ = (TArrayType($1, $3));
+  }
+
+NT_ANNON_RIGHT_TYPE_NAME:
   /* EMPTY */
   %empty
   {
     $$ = (TOrigType(NULL));
   }
-| TM_DEREF NT_ANNON_RIGHT_TYPE_EXPR
+| TM_DEREF NT_ANNON_RIGHT_TYPE_NAME
   {
     $$ = (TPtrType($2));
   }
-| TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN NT_ARGUMENT_TYPE_LIST TM_RIGHT_PAREN
+| TM_LEFT_PAREN NT_ANNON_RIGHT_TYPE_NAME TM_RIGHT_PAREN
   {
-    // Waiting for response
-    // $$ = (TFuncType(TPtrType(TOrigType(NULL)), $5));
-    $$ = (TPtrType(TFuncType(TOrigType(NULL), $5)));
-  }
-| TM_LEFT_PAREN TM_DEREF TM_RIGHT_PAREN TM_LEFT_PAREN TM_RIGHT_PAREN
-  {
-    // $$ = (TFuncType(TPtrType(TOrigType(NULL)), TTNil()));
-    $$ = (TPtrType(TFuncType(TOrigType(NULL), TTNil())));
-  }
-| NT_ANNON_RIGHT_TYPE_EXPR TM_LEFT_SQUARE TM_NAT TM_RIGHT_SQUARE
-  {
-    $$ = (TArrayType($1, $3));
+    $$ = ($2);
   }
 
 %%
