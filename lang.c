@@ -363,40 +363,11 @@ void print_left_type(struct left_type * t) {
   }
 }
 
-enum PrintRetType {
-  T_ORIG_TYPE_RETURN,
-  T_FUNC_TYPE_RETURN
-};
-
-struct print_ret {
-  enum PrintRetType t;
-  union {
-    char * name;
-    struct var_decl_expr * e;
-  } d;
-};
-
-struct print_ret * OrigTypeReturn(char * name) {
-  struct print_ret * res =
-    (struct print_ret *) malloc (sizeof (struct print_ret));
-  res -> t = T_ORIG_TYPE_RETURN;
-  res -> d.name = name;
-  return res;
-}
-
-struct print_ret * FuncTypeReturn(struct var_decl_expr * e) {
-  struct print_ret * res =
-    (struct print_ret *) malloc (sizeof (struct print_ret));
-  res -> t = T_FUNC_TYPE_RETURN;
-  res -> d.e = e;
-  return res;
-}
-
-struct print_ret * print_var_decl_expr_rec(struct var_decl_expr * e) {
-  struct print_ret * res;
+char * print_var_decl_expr_rec(struct var_decl_expr * e) {
+  char * res;
   switch (e -> t) {
   case T_ORIG_TYPE:
-    return OrigTypeReturn(e -> d.ORIG_TYPE.name);
+    return e -> d.ORIG_TYPE.name;
   case T_PTR_TYPE:
     res = print_var_decl_expr_rec(e -> d.PTR_TYPE.base);
     printf("pointer of ");
@@ -406,30 +377,18 @@ struct print_ret * print_var_decl_expr_rec(struct var_decl_expr * e) {
     printf("array[%d] of ", e -> d.ARRAY_TYPE.size);
     return res;
   case T_FUNC_TYPE:
-    return FuncTypeReturn(e);
+    res = print_var_decl_expr_rec(e -> d.FUNC_TYPE.ret);
+    printf("function taking (\n");
+    print_type_list_as_argument_types(e -> d.FUNC_TYPE.args);
+    printf(") returning ");
+    return res;
   }
 }
 
 char * print_var_decl_expr_rec2(struct var_decl_expr * e) {
-  struct print_ret * r = print_var_decl_expr_rec(e);
-  char * res;
-  switch (r -> t) {
-  case T_ORIG_TYPE_RETURN:
-    res = r -> d.name;
-    printf("the LHS type\n");
-    free(r);
-    return res;
-  case T_FUNC_TYPE_RETURN:
-    printf("the following function type\n");
-    indent ++;
-    print_spaces();
-    printf("Return type: ");
-    res = print_var_decl_expr_rec2(r -> d.e -> d.FUNC_TYPE.ret);
-    print_type_list_as_argument_types(r -> d.e -> d.FUNC_TYPE.args);
-    indent --;
-    free(r);
-    return res;
-  }
+  char * r = print_var_decl_expr_rec(e);
+  printf("the LHS type\n");
+  return r;
 }
 
 void print_var_decl_expr_for_var(struct var_decl_expr * e) {
