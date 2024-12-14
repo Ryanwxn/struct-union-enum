@@ -13,4 +13,4 @@ int func12 ( int ((((())))) ) ;
 int func13 ( int *****()()()() ) ;
 int func14 ( int (*)()(char) ) ;
 int func15 ( int (*) (int (*)())) ;
-int func16 ( int (*(*)())()) ;
+int (*func16) ( int (*(*)())()) ;
