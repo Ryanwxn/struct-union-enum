@@ -30,3 +30,5 @@ union Empty_Union
 {
 
 } ;
+
+union UNION_DEF ;

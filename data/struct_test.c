@@ -30,3 +30,5 @@ struct Empty_Struct
 {
 
 } ;
+
+struct STRUCT_DEF ;

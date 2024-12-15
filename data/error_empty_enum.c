@@ -1,0 +1,1 @@
+enum enum_cannot_be_empty { } ;
