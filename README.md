@@ -28,7 +28,7 @@ make
 我们额外提供了一个测试脚本 `driver.py` 对 `./data` 下的所有 `*.c` 文件进行测试，并输出语法分析的结果，你可以在 `struct_union_enum` 文件夹下输入
 
 ```
-python driver.py
+python ./driver.py
 ```
 
 来执行该测试脚本。
