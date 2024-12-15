@@ -1,1 +1,1 @@
-union UNION_DEF ;
+union UNION_DEF { int struct ; };
