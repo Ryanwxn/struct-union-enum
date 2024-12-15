@@ -18,10 +18,12 @@ make
 进行编译，然后输入
 
 ```
-./main TESTFILE
+./main /path/to/the/file
 ```
 
-对 `TESTFILE` 文件里的代码进行词法分析与语法分析。
+对 `/path/to/the` 文件夹下的 `file` 文件进行词法分析与语法分析。
+
+我们在 `/struct_union_enum/data` 文件夹下提供了若干测试文件，涵盖了各个语法以及各个语法的嵌套，以及涉及优先级的语句。
 
 我们额外提供了一个测试脚本 `driver.py` 对 `./data` 下的所有 `*.c` 文件进行测试，并输出语法分析的结果，你可以在 `struct_union_enum` 文件夹下输入
 
